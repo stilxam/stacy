@@ -1,26 +1,24 @@
-{ pkgs, ... }: {
+{ pkgs, pkgs-unstable, ... }: {
   environment.systemPackages = with pkgs; [
+    #(callPackage ./programs/min.nix {})
+    # zoom-us
       # ---------------------
     # --- Development Tools
     # ---------------------
     cargo
     git
     gh
-    jetbrains-toolbox
-    nodejs
     nix-output-monitor
     nix-prefetch-git
     python313
-    sqlite
-    zed-editor
-
+    jetbrains-toolbox
+    pkgs-unstable.claude-code
     # ---------------------
     # --- System Utilities
     # ---------------------
     btop
     gnome-disk-utility
     grc
-    neofetch
     nix-output-monitor
     pavucontrol
     ripgrep
@@ -30,29 +28,30 @@
     wget
     wl-clipboard
     zip
+    imgcat
+    pay-respects
+    
 
     # ---------------------
-    # --- Desktop Environment & Utilities (Hyprland/Sway)
+    # --- Desktop Environment & Utilities 
     # ---------------------
+    sunsetr
+    swaybg
+    fuzzel
+    xwayland-satellite
+    nautilus
     dunst
-    greetd.tuigreet
-    hyprcursor
-    hyprpaper
-    hyprshot
-    hyprsunset
+    tuigreet
     networkmanagerapplet
     picom
-    rofi
     swaylock
     waybar
 
     # ---------------------
     # --- Web Browsers
     # ---------------------
-    chromium
     google-chrome
-    librewolf
-    w3m
+    firefox
 
     # ---------------------
     # --- Productivity & Creativity
@@ -69,15 +68,15 @@
     # ---------------------
     # --- Communication & Entertainment
     # ---------------------
-    spotify
-    steam
-    teams-for-linux
-    threema-desktop
+    # spotify
+    # steam
+    # teams-for-linux
+    # threema-desktop
 
     # ---------------------
     # --- AI & Machine Learning
     # ---------------------
-    ollama
+    # pkgs-unstable.ollama[-cuda]
     nextjs-ollama-llm-ui
 
     # ---------------------
@@ -87,6 +86,6 @@
     fzf
     gnupg
     shotman
-    thefuck
+    shotcut
   ];
 }

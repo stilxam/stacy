@@ -1,6 +1,9 @@
 {
-  services.desktopManager.plasma6.enable = true;
+  services.desktopManager.plasma6.enable = false;
+  services.displayManager.sddm.enable= true;
+
   services.xserver = {
+    enable=true;
     videoDrivers = ["nvidia"];
     xkb = {
       layout = "us";
@@ -9,6 +12,6 @@
   };
   services.displayManager.autoLogin = {
     enable = true;
-    user = "ovindar";
+    user = "maxwell";
   };
 }

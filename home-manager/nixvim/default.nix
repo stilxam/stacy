@@ -7,6 +7,7 @@
 
   programs.nixvim = {
     enable = true;
+    nixpkgs.config.allowUnfree = true;
     colorschemes.onedark.enable = true;
     opts = {
       number = true;

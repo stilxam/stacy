@@ -154,5 +154,15 @@
       action = "gc";
       options.desc = "Toggle comment for selection";
     }
+    {
+      key = "<leader>p";
+      action = "<cmd>MarkdownPreview<CR>";
+      options.desc = "Toggle Markdown Preview";
+    }
+    {
+      key = "<leader>ps";
+      action = "<cmd>MarkdownPreviewStop<CR>";
+      options.desc = "Stop Markdown Preview";
+    }
   ];
 }

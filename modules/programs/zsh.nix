@@ -19,7 +19,7 @@
     ohMyZsh = {
       enable = true;
       plugins = [
-        "thefuck" # also requires `programs.thefuck.enable = true;`
+        # "pay-respects" # also requires `programs.thefuck.enable = true;`
       ];
       theme = "robbyrussell";
     };

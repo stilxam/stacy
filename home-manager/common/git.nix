@@ -1,8 +1,8 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 {
   programs.git = {
     enable = true;
-    userName = config.programs.git.userName;
-    userEmail = config.programs.git.userEmail;
+    settings.user.name = "your-username";
+    settings.user.email = "your@email.com";
   };
 }

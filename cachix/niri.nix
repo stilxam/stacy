@@ -3,10 +3,10 @@
   nix = {
     settings = {
       substituters = [
-        "https://cache.nixos-cuda.org"
+        "https://niri.cachix.org"
       ];
       trusted-public-keys = [
-        "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="
+        "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
       ];
     };
   };

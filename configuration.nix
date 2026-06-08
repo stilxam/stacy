@@ -1,7 +1,7 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, pkgs-unstable, inputs, ... }:
 
 {
   imports =
@@ -9,7 +9,8 @@
       ./hardware-configuration.nix
       ./cachix.nix
       ./modules/packages.nix
-      ./modules/programs/hyprland.nix
+      #./modules/programs/hyprland.nix
+      ./modules/programs/niri.nix
       ./modules/programs/zsh.nix
       ./modules/programs/steam.nix
       ./modules/services/bluetooth.nix
@@ -27,6 +28,7 @@
 
 
   services = {
+    fwupd.enable=true;
     printing.enable = true;
     tailscale.enable = true;
   };
@@ -45,7 +47,11 @@
 
   xdg.portal = {
     enable = true;
-    extraPortals = [pkgs.xdg-desktop-portal-gtk];
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
+      pkgs.xdg-desktop-portal-gnome
+    ];
+    config.common.default = ["gtk" "gnome"];
   };
 
   fonts.packages = [ pkgs.nerd-fonts.zed-mono ];
@@ -67,5 +73,5 @@
     dates = "weekly";
   };
 
-  system.stateVersion = "25.05"; # Did you read the comment?
+  system.stateVersion = "26.05"; # Did you read the comment?
 }

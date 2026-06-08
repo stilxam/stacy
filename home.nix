@@ -8,6 +8,9 @@
     ./home-manager/nixvim/default.nix
   ];
 
+
+  home.username = "maxwell";
+  home.homeDirectory = "/home/maxwell";
   home.stateVersion = "25.05";
 
   # Let home-manager manage itself

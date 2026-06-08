@@ -1,93 +1,44 @@
-# Stacy's NixOS Configuration
+# stacy — NixOS configuration
 
-This repository contains the NixOS configuration for a system named "stacy", managed using Nix Flakes.
+Personal NixOS flake for a single machine.
 
-## File Structure
+## Hardware
 
-The repository is organized as follows:
+- **CPU:** Intel (x86\_64)
+- **GPU:** NVIDIA (open drivers + CUDA)
+- **Disk:** LUKS-encrypted
 
-- `flake.nix`: The entry point for the configuration. It defines the inputs (like `nixpkgs`, `home-manager`, etc.) and the main output, which is the NixOS configuration for "stacy".
+## Features
 
-- `configuration.nix`: The main NixOS configuration file. It imports all the necessary modules from the `modules/` directory and sets system-wide options.
-
-- `home.nix`: The main Home Manager configuration file. It imports user-specific modules from the `home-manager/` directory.
-
-- `modules/`: This directory contains modularized NixOS configurations, categorized into:
-    - `hardware/`: Hardware-specific configurations (e.g., NVIDIA drivers, Bluetooth).
-    - `programs/`: Configuration for system-wide programs (e.g., Hyprland, Zsh, Steam).
-    - `services/`: Configuration for system services (e.g., greetd, PipeWire, SSH).
-    - `system/`: Basic system settings (e.g., bootloader, networking, locale, users).
-    - `packages.nix`: Defines system-wide packages to be installed.
-
-- `home-manager/`: This directory contains modularized Home Manager configurations, categorized into:
-    - `common/`: Common user-specific configurations (e.g., Git, Kitty).
-    - `nixvim/`: Configuration for NixVim.
-    - `packages.nix`: Defines user-specific packages to be installed.
-
-- `cachix/`: This directory contains configurations for Cachix, a binary cache service for Nix.
+- **Compositor:** [niri](https://github.com/YaTeresa/niri) (Wayland)
+- **Home Manager** for user environment management
+- **nixvim** for Neovim configuration
+- **Ollama** with CUDA support for local LLMs
+- **Zsh** with oh-my-zsh
 
 ## Usage
 
-To apply this configuration to a NixOS system, you can use the following commands:
-
-### New Installation
-
-For a new installation, you can use the `nixos-install` command with the flake:
-
-```bash
-nixos-install --flake .#stacy
+```sh
+git clone <this-repo> /etc/nixos
+cd /etc/nixos
 ```
 
-### Existing System
+Before applying, you must customize:
 
-For an existing system, you can switch to the new configuration using `nixos-rebuild`:
+1. **Username** — replace `maxwell` in `flake.nix`, `home.nix`, and `modules/system/users.nix`
+2. **Hardware** — generate `hardware-configuration.nix` for your machine (it is git-ignored):
+   ```sh
+   nixos-generate-config --show-hardware-config > hardware-configuration.nix
+   ```
+   Also update the LUKS UUID placeholder in `modules/system/bootloader.nix`.
+3. **Git identity** — set your name and email in `home-manager/common/git.nix`
 
-```bash
-nixos-rebuild switch --flake .#stacy
+Then apply:
+
+```sh
+sudo nixos-rebuild switch --flake .#stacy
 ```
 
-## Secrets
+## License
 
-This configuration uses a `secrets.nix` file to store sensitive information, such as usernames, email addresses, and other personal data. This file is not tracked by Git and should be created manually.
-
-To use this configuration, create a `secrets.nix` file in the root of the repository with the following structure:
-
-```nix
-{
-  users.users.<username> = {
-    isNormalUser = true;
-    description = "<description>";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [];
-    shell = pkgs.zsh;
-  };
-
-  home-manager.users.<username> = {
-    imports = [ 
-      inputs.nixvim.homeManagerModules.nixvim
-      ./home.nix 
-    ];
-  };
-
-  home = {
-    username = "<username>";
-    homeDirectory = "/home/<username>";
-  };
-
-  programs.git = {
-    userName = "<git_username>";
-    userEmail = "<git_email>";
-  };
-}
-```
-
-Replace the following placeholders with your own information:
-
-- `<username>`: Your username.
-- `<description>`: A description for your user account.
-- `<git_username>`: Your Git username.
-- `<git_email>`: Your Git email address.
-
-## Customization
-
-To customize this configuration, you can add new modules to the `modules/` or `home-manager/` directories and import them in `configuration.nix` or `home.nix`, respectively. You can also modify the existing files to change the configuration.
+MIT
